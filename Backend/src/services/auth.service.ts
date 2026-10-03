@@ -1,8 +1,9 @@
 import { UserDTO } from "../dto/user.dto";
 
 
-export function signupservice(data:UserDTO){
-    
+export async function signupservice(data:UserDTO){
+    const response = await createUser(data)
+    return response
 }
 
 export function signinservice(){
