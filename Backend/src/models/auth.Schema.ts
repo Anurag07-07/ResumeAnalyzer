@@ -12,16 +12,19 @@ export interface userSchema extends Document{
 const UserSchema = new mongoose.Schema<userSchema>({
     username:{
         type:String,
-        required:true,
+        required:[true,"Username is required"],
+        trim:true
     },
     password:{
         type:String,
-        required:true
+        required:[true,"Password is required"]
     },
     email:{
         type:String,
-        required:true,
-        unique:true
+        required:[true,"Email is required"],
+        unique:true,
+        lowercase:true,
+        trim:true
     },
     deletedAt:{
         type:Date,
@@ -29,4 +32,4 @@ const UserSchema = new mongoose.Schema<userSchema>({
     }
 },{timestamps:true})
 
-export default mongoose.model<userSchema>('users',UserSchema)
+export const User= mongoose.model<userSchema>('User',UserSchema)

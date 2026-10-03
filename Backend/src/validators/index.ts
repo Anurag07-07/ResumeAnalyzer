@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { success } from "zod";
 import { AnyZodObject } from "zod/v3";
 
 
 export function schemavalidator(schema: AnyZodObject){
-     return async (err:Error, req:Request, res: Response, next: NextFunction)=>{
+     return async (req:Request, res: Response, next: NextFunction)=>{
              try {
               await schema.parseAsync(req.body)
               next()
@@ -12,7 +11,7 @@ export function schemavalidator(schema: AnyZodObject){
                 res.status(401).json({
                     message:"Invalid body",
                     success:false,
-                    error:err
+                    error:error
                 })
              }
      }
