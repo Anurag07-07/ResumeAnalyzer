@@ -54,3 +54,8 @@ export async function signinservice(data: UserDTO):Promise<ResponseDTO> {
         throw new Error("Internal Server Error");
     }
 }
+
+
+export async function logoutservice(id: string) {
+    
+}

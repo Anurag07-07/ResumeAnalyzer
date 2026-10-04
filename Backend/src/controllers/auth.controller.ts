@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { signinservice, signupservice } from "../services/auth.service";
+import { NextFunction, Request, Response } from "express";
+import { logoutservice, signinservice, signupservice } from "../services/auth.service";
 
 
 export async function signupController(req: Request, res: Response) {
@@ -32,4 +32,8 @@ export async function signinController(req: Request, res: Response) {
             message: "Invalid username or password",
         })
     }
+}
+
+export async function logout(req: Request, res : Response){
+   const user =  await logoutservice(req.user.id)  
 }
