@@ -56,6 +56,6 @@ export async function signinservice(data: UserDTO):Promise<ResponseDTO> {
 }
 
 
-export async function logoutservice(id: string) {
+export async function logoutservice(id: string | undefined) {
     
 }

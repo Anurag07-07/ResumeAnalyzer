@@ -35,5 +35,5 @@ export async function signinController(req: Request, res: Response) {
 }
 
 export async function logout(req: Request, res : Response){
-   const user =  await logoutservice(req.user.id)  
+   const user =  await logoutservice(req.userId)  
 }
