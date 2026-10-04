@@ -2,13 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { serverconfig } from "../config/server.config";
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: JwtPayload | string;
-        }
-    }
-}
+
 
 export const authUser = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.token;
@@ -21,7 +15,7 @@ export const authUser = async (req: Request, res: Response, next: NextFunction) 
 
     try {
         const decoded = jwt.verify(token, serverconfig.JWT_SECRET) as JwtPayload | string;
-        req.user = decoded;
+        req.userid = decoded._id;
 
         next();
     } catch (err) {
