@@ -10,6 +10,9 @@ function run() {
 }
 run();
 exports.serverconfig = {
-    PORT: Number(process.env.PORT) || 8080
+    PORT: Number(process.env.PORT) || 8080,
+    MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017",
+    JWT_SECRET: process.env.JWT_SECRET || "secretkey",
+    SALTROUNDS: Number(process.env.SALTROUNDS) || 10
 };
 //# sourceMappingURL=server.config.js.map
