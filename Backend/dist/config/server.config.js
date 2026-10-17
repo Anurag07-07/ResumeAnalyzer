@@ -13,6 +13,8 @@ exports.serverconfig = {
     PORT: Number(process.env.PORT) || 8080,
     MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017",
     JWT_SECRET: process.env.JWT_SECRET || "secretkey",
-    SALTROUNDS: Number(process.env.SALTROUNDS) || 10
+    SALTROUNDS: Number(process.env.SALTROUNDS) || 10,
+    REDIS_URL: process.env.REDIS_URL || "redis://localhost:6379",
+    REDIS_BLACKLIST: process.env.REDIS_BLACKLIST || "resume_counter"
 };
 //# sourceMappingURL=server.config.js.map

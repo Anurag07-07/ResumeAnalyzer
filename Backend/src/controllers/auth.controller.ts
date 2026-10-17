@@ -1,11 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { logoutservice, signinservice, signupservice } from "../services/auth.service";
-
 
 export async function signupController(req: Request, res: Response) {
     try {
         const response = await signupservice(req.body)
-        res.cookie("token", response.token, { httpOnly: true, secure: true, sameSite: "none" })
+        res.cookie("token", `Bearer ${response.token}`, { httpOnly: true, secure: true, sameSite: "none" })
 
         return res.status(201).json({
             message: "User registered successfully",
@@ -21,7 +20,7 @@ export async function signupController(req: Request, res: Response) {
 export async function signinController(req: Request, res: Response) {
     try {
         const response = await signinservice(req.body);
-        res.cookie("token", response.token, { httpOnly: true, secure: true, sameSite: "none" })
+        res.cookie("token", `Bearer ${response.token}`, { httpOnly: true, secure: true, sameSite: "none" })
 
         return res.status(200).json({
             message: "User signin successfully",
@@ -34,6 +33,17 @@ export async function signinController(req: Request, res: Response) {
     }
 }
 
-export async function logout(req: Request, res : Response){
-   const user =  await logoutservice(req.userId)  
+export async function logoutController(req: Request, res: Response) {
+
+    const token = req.cookies.token?.split(' ')[1];
+
+    const exp=req.user.exp;
+
+    await logoutservice(token,exp);
+
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "strict" });
+
+    return res.status(200).json({
+        message: "User logged out successfully",
+    });
 }
