@@ -4,15 +4,15 @@ import { serverconfig } from "../config/server.config";
 
 
 export const authUser = async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({
+            message: "Token not provided"
+        });
+    }
+
     try {
-        const token = req.cookies.token;
-
-        if (!token) {
-            return res.status(401).json({
-                message: "Token not provided"
-            });
-        }
-
         const decoded = jwt.verify(token, serverconfig.JWT_SECRET as string) as JwtPayload;
         req.userId = decoded.id!
 

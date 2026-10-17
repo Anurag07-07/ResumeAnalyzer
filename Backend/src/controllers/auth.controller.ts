@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import { logoutservice, signinservice, signupservice } from "../services/auth.service";
+import { Request, Response } from "express";
+import { signinservice, signupservice } from "../services/auth.service";
 
 
 export async function signupController(req: Request, res: Response) {
@@ -34,6 +34,10 @@ export async function signinController(req: Request, res: Response) {
     }
 }
 
-export async function logout(req: Request, res : Response){
-   const user =  await logoutservice(req.userId)  
+export async function logoutController(req: Request, res: Response) {
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "strict" });
+
+    return res.status(200).json({
+        message: "User logged out successfully",
+    });
 }
