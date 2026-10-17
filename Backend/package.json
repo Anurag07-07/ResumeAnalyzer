@@ -22,6 +22,7 @@
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@types/cookie-parser": "^1.4.10",
     "@types/ioredis": "^4.28.10",
     "@types/redis": "^4.0.10",
     "bcrypt": "^6.0.0",

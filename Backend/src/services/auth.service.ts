@@ -3,6 +3,7 @@ import { ResponseDTO, UserDTO } from "../dtos/user.dto";
 import { createUser, loginUser } from "../repositories/auth.repositiory";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt"
+import { blacklistToken } from "../repositories/cache.repository";
 
 export async function signupservice(data: UserDTO): Promise<ResponseDTO> {
     try {
@@ -12,9 +13,16 @@ export async function signupservice(data: UserDTO): Promise<ResponseDTO> {
             serverconfig.JWT_SECRET,
             { expiresIn: "1d" }
         )
-        return {
-            user, token
+        const info:ResponseDTO={
+            user:{
+                _id:user._id,
+                username:user.username,
+                email:user.email,
+            },
+            token
         }
+        return info;
+        
     } catch (error) {
         throw error;
     }
@@ -43,7 +51,7 @@ export async function signinservice(data: UserDTO):Promise<ResponseDTO> {
         const info:ResponseDTO={
             user:{
                 _id:userinfo._id,
-                username:userinfo.password,
+                username:userinfo.username,
                 email:userinfo.email,
             },
             token
@@ -56,6 +64,11 @@ export async function signinservice(data: UserDTO):Promise<ResponseDTO> {
 }
 
 
-export async function logoutservice(id: string | undefined) {
-    
+export async function logoutservice(token:string,exp:number|undefined) {
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    const remainingTime = exp ? exp - nowInSeconds : 0;
+
+    if(remainingTime>0){
+        await blacklistToken(token,remainingTime);
+    }
 }

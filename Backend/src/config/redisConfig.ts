@@ -1,26 +1,29 @@
-import { serverconfig } from './server.config'
-import Redis from 'ioredis'
+import { createClient } from "redis";
+import { serverconfig } from "./server.config";
 
+export const redisClient=createClient({
+  url:serverconfig.REDIS_URL
+})
 
+redisClient.on('error',(err)=>{
+  console.log("Redis error",err);
+})
 
-function connectionRedis(){
-    try{
-     let connection:Redis;
-   
-     return () => {
-      if(!connection){
-      connection = new Redis({
-        port:serverconfig.REDIS_PORT,
-        host:serverconfig.REDIS_HOST
-      })
-      return connection;
-      }
-  }
-     
-    }catch(error){
-       console.log("Redis Connection Error:", error);
-       throw error;
+redisClient.on('connect',()=>{
+  console.log("Redis connected");
+})
+
+export async function initRedis() {
+  try{
+    if(!redisClient.isOpen){
+      await redisClient.connect();
     }
+  }catch(err){
+    console.log("Redis connection error",err);
+    throw err;
+  }
 }
 
-export const getredisconnection = connectionRedis();
+export async function closeRedis() {
+  await redisClient.quit();
+}

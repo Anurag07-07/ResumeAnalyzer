@@ -14,7 +14,7 @@ exports.serverconfig = {
     MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017",
     JWT_SECRET: process.env.JWT_SECRET || "secretkey",
     SALTROUNDS: Number(process.env.SALTROUNDS) || 10,
-    REDIS_PORT: Number(process.env.REDIS_PORT) || 6379,
-    REDIS_HOST: process.env.REDIS_HOST || "localhost"
+    REDIS_URL: process.env.REDIS_URL || "redis://localhost:6379",
+    REDIS_BLACKLIST: process.env.REDIS_BLACKLIST || "resume_counter"
 };
 //# sourceMappingURL=server.config.js.map
