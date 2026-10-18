@@ -5,6 +5,7 @@ type Port = {
     SALTROUNDS: number;
     REDIS_URL: string;
     REDIS_BLACKLIST: string;
+    GEMINI_KEY: string;
 };
 export declare const serverconfig: Port;
 export {};

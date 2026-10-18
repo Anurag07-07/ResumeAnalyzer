@@ -5,7 +5,7 @@ const severityEnum = z.enum(["low","medium","high"]);
 export const interviewReportSchemaZodd = z.object({
     matchScore:z.number().min(0).max(100).describe("A score that describes how well the resume fits the JD"),
 
-    techicalQuestion:z.array(
+    technicalQuestion:z.array(
         z.object({
             question:z.string().describe("Specific technical question based on the tech stack"),
             intention:z.string().describe("What the interviewer is trying to evalute with the question"),
@@ -19,13 +19,13 @@ export const interviewReportSchemaZodd = z.object({
             answer:z.string().describe("A high-quality STAR method response")
         })
     ),
-    skillsGap:z.array(
+    skillGap:z.array(
         z.object({
             skill:z.string().describe("The specific tool or concept missing from the resume"),
             severity:severityEnum.describe("How critical this skill is for the role")
         })
     ),
-    preparation:z.array(
+    preparationPlan:z.array(
         z.object({
             day:z.number().describe("Day number of the study plan"),
             focus:severityEnum.describe("The intensity or importance of this day's task"),

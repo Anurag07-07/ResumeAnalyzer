@@ -14,7 +14,9 @@ export async function InterviewController(req:Request,res:Response){
         const text=(await resumeText).text;
         const userId=req.user.userId;
 
-        const interviewReport=InterviewReportService({text,userId,selfDescription,jobDescription});
+        const interviewReport = await InterviewReportService({text,userId,selfDescription,jobDescription});
+        console.log(interviewReport);
+        
         
         return res.status(201).json({
             success:true,
@@ -85,7 +87,7 @@ export async function generateTailoredResumeController(req:Request,res:Response)
             message:"No resume text in this report"
         });
 
-        const tailored=generateTailoredResumeService(report);
+        const tailored= await generateTailoredResumeService(report);
 
         return res.status(200).json({
             success:true,

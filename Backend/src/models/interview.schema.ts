@@ -19,10 +19,12 @@ export interface IBehaviouralQuestion{
 
 export interface ISkill{
     skill:string
-    severnity:Severnity 
+    severity:"low" | "medium" | "high"
 }
 
 export interface IPreparation{
+    day:number
+    focus:"low" | "medium" | "high"
     tasks:string
 }
 
@@ -77,7 +79,7 @@ export const skillSchema = new Schema<ISkill>({
         type:String,
         required:true
     },
-    severnity:{
+    severity:{
         type:String,
         enum:Object.values(Severnity),
         required:true
@@ -88,8 +90,18 @@ export const skillSchema = new Schema<ISkill>({
 
 
 export const preparationSchema = new Schema<IPreparation>({
+    day:{
+        type:Number,
+        required:true
+    },
+    focus:{
+        type:String,
+        enum:Object.values(Severnity),
+        required:true
+    },
     tasks:{
-        type:String 
+        type:String,
+        required:true
     },
     
 },{_id:false})    

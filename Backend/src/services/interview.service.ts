@@ -1,4 +1,5 @@
-import interviewSchema from "../models/interview.Schema";
+import interviewSchema from "../models/interview.schema";
+import { generateTailoredResumeWithRetry, generateWithRetry } from "./ai.service";
 
 export interface IInterviewReport{
     text:string;
